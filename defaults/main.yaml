@@ -1,0 +1,88 @@
+---
+
+# Package to be installed (you can force a specific version here)
+collectd_pkg: collectd
+
+# Default path to the main config file
+collectd_config_path: /etc/collectd.conf
+
+
+# Global options
+collectd_global_options_default_hostname: "{{ ansible_hostname }}"
+collectd_global_options_default_fqdnlookup: true
+collectd_global_options_default_interval: 10
+collectd_global_options_default_timeout: 2
+collectd_global_options_default_readthreads: 5
+collectd_global_options_default_autoloadplugin: false
+
+collectd_global_options_default:
+  - options:
+    - Hostname: "{{ collectd_global_options_default_hostname }}"
+    - FQDNLookup: "{{ collectd_global_options_default_fqdnlookup }}"
+    - Interval: "{{ collectd_global_options_default_interval }}"
+    - Timeout:  "{{ collectd_global_options_default_timeout }}"
+    - ReadThreads: "{{ collectd_global_options_default_readthreads }}"
+    - AutoLoadPlugin: "{{ collectd_global_options_default_autoloadplugin }}"
+
+
+# Syslog plugin
+collectd_plugins_syslog_loglevel: info
+
+collectd_plugins_syslog:
+  - options:
+    - LoadPlugin: syslog
+  - sections:
+    - name: Plugin
+      param: syslog
+      content:
+        - options:
+          - LogLevel: "{{ collectd_plugins_syslog_loglevel }}"
+
+
+# CPU plugin
+collectd_plugins_cpu:
+  - options:
+    - LoadPlugin: cpu
+
+
+# Interface plugin
+collectd_plugins_interface:
+  - options:
+    - LoadPlugin: interface
+
+
+# Load plugin
+collectd_plugins_load:
+  - options:
+    - LoadPlugin: load
+
+
+# Memory plugin
+collectd_plugins_memory:
+  - options:
+    - LoadPlugin: memory
+
+
+# Plugins definitions
+collectd_plugins_default: "{{
+  collectd_plugins_syslog +
+  collectd_plugins_cpu +
+  collectd_plugins_interface +
+  collectd_plugins_load +
+  collectd_plugins_memory
+}}"
+
+
+# Default list of custom global options
+collectd_global_options_custom: []
+
+# Default list of custom plugins
+collectd_plugins_custom: []
+
+collectd_config:
+  content: "{{
+    collectd_global_options_default +
+    collectd_global_options_custom +
+    collectd_plugins_default +
+    collectd_plugins_custom
+  }}"

@@ -1,0 +1,14 @@
+---
+
+galaxy_info:
+  author: Jiri Tyr
+  description: Role which installs CollectD
+  license: MIT
+  min_ansible_version: 1.8
+  platforms:
+    - name: EL
+      versions:
+        - all
+  categories:
+    - monitoring
+dependencies: []

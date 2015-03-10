@@ -1,0 +1,16 @@
+---
+
+- name: Test distribution
+  assert:
+    that: ansible_os_family == "RedHat"
+
+- name: Install CollectD RPM package
+  yum:
+    name: "{{ collectd_pkg }}"
+    state: installed
+
+- name: Configure CollectD
+  template:
+    src: collectd.conf.j2
+    dest: "{{ collectd_config_path }}"
+  notify: Restart collectd service
