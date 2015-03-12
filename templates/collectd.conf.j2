@@ -6,4 +6,8 @@
 
 {% from 'templates/encoder/macros/apache_encode_macro.j2' import apache_encode with context -%}
 
-{{ apache_encode(collectd_config, convert_bools=true, convert_nums=true) }}
+{{ apache_encode(
+     collectd_config,
+     convert_bools=true,
+     convert_nums=true,
+     quote_all_strings=true) }}
