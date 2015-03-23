@@ -8,6 +8,8 @@
   yum:
     name: "{{ collectd_pkg }}"
     state: installed
+  notify:
+    - Restart collectd service
   tags:
     - collectd_pkg
 
@@ -15,6 +17,7 @@
   template:
     src: collectd.conf.j2
     dest: "{{ collectd_config_path }}"
-  notify: Restart collectd service
+  notify:
+    - Restart collectd service
   tags:
     - collectd_config
