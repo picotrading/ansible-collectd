@@ -189,6 +189,24 @@ Example
                               - Instance: used
                               - WarningMax: 70
                               - FailureMax: 80
+
+# Example of how to declare custom types
+- hosts: myhost5
+  roles:
+    - role: collectd
+      # Specify where to create the custom types.db file
+      collectd_global_options_default_typedb_custom: /usr/share/collectd/types.db.custom
+      # Specify the content of the file
+      collectd_types:
+        content:
+          - options:
+            # types with single datasource (value)
+            - mybitrate: value:GAUGE:0:4294967295
+            - mycounter: value:COUNTER:U:U
+            # type with multiple data sources (rx, tx)
+            - myifoctects:
+              - rx:COUNTER:0:4294967295,
+              - tx:COUNTER:0:4294967295
 ```
 
 This role requires [Jinja2 Encoder
@@ -214,6 +232,9 @@ collectd_pkg: collectd
 # Default path to the main config file
 collectd_config_path: /etc/collectd.conf
 
+# Default list of custom types
+collectd_types: {}
+
 
 # Global options
 collectd_global_options_default_hostname: "{{ ansible_hostname }}"
@@ -222,6 +243,11 @@ collectd_global_options_default_interval: 10
 collectd_global_options_default_timeout: 2
 collectd_global_options_default_readthreads: 5
 collectd_global_options_default_autoloadplugin: false
+collectd_global_options_default_typesdb: "{{
+  [ collectd_global_options_default_typesdb_default ] + (
+  [ collectd_global_options_default_typesdb_custom ]
+  if collectd_global_options_default_typesdb_custom else [])
+}}"
 
 collectd_global_options_default:
   - options:
@@ -231,6 +257,7 @@ collectd_global_options_default:
     - Timeout:  "{{ collectd_global_options_default_timeout }}"
     - ReadThreads: "{{ collectd_global_options_default_readthreads }}"
     - AutoLoadPlugin: "{{ collectd_global_options_default_autoloadplugin }}"
+    - TypesDB: "{{ pico_collectd_global_options_default_typesdb }}"
 
 
 # Syslog plugin

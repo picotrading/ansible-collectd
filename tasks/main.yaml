@@ -21,3 +21,27 @@
     - Restart collectd service
   tags:
     - collectd_config
+
+- name: Configure custom types.db
+  template:
+    src: types.db.j2
+    dest: "{{ collectd_global_options_default_typesdb_custom }}"
+  when: >
+    collectd_global_options_default_typesdb_custom and
+    collectd_types
+  notify:
+    - Restart collectd service
+  tags:
+    - collectd_config
+
+- name: Remove custom types.db file
+  file:
+    path: "{{ collectd_global_options_default_typesdb_custom }}"
+    state: absent
+  when: >
+    collectd_global_options_default_typesdb_custom and
+    not collectd_types
+  notify:
+    - Restart collectd service
+  tags:
+    - collectd_config
