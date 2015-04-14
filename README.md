@@ -209,14 +209,14 @@ Example
               - tx:COUNTER:0:4294967295
 ```
 
-This role requires [Jinja2 Encoder
-Macros](https://github.com/picotrading/jinja2-encoder-macros) which must be
+This role requires [Config Encoder
+Macros](https://github.com/picotrading/config-encoder-macros) which must be
 placed into the same directory as the playbook:
 
 ```
 $ ls -1 *.yaml
 site.yaml
-$ git clone https://github.com/picotrading/jinja2-encoder-macros.git ./templates/encoder
+$ git clone https://github.com/picotrading/config-encoder-macros.git ./templates/encoder
 ```
 
 
@@ -327,7 +327,7 @@ collectd_config:
 Dependencies
 ------------
 
-* [Jinja2 Encoder Macros](https://github.com/picotrading/jinja2-encoder-macros)
+* [Config Encoder Macros](https://github.com/picotrading/config-encoder-macros)
 
 
 License
