@@ -4,6 +4,6 @@
 # Any changes will be automatically reverted.
 #
 
-{% from "templates/encoder/macros/apache_encode_macro.j2" import apache_encode with context -%}
+{% from "templates/encoder/macros/ini_encode_macro.j2" import ini_encode with context -%}
 
-{{ apache_encode(collectd_types) }}
+{{ ini_encode(collectd_types, delimiter=" ", section_is_comment=true) }}
