@@ -7,7 +7,7 @@
 - name: Install CollectD RPM package
   yum:
     name: "{{ collectd_pkg }}"
-    state: installed
+    state: present
   notify:
     - Restart collectd service
   tags:
