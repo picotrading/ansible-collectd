@@ -229,6 +229,9 @@ List of variables used by the role:
 # Package to be installed (you can force a specific version here)
 collectd_pkg: collectd
 
+# List of additional plugins (e.g. collectd-python)
+collectd_pkg_plugins: []
+
 # Default path to the main config file
 collectd_config_path: /etc/collectd.conf
 

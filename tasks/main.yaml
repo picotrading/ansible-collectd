@@ -4,10 +4,20 @@
   assert:
     that: ansible_os_family == "RedHat"
 
-- name: Install CollectD RPM package
+- name: Install Collectd RPM package
   yum:
     name: "{{ collectd_pkg }}"
     state: present
+  notify:
+    - Restart collectd service
+  tags:
+    - collectd_pkg
+
+- name: Install additional Collectd plugin RPM package
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: collectd_pkg_plugins
   notify:
     - Restart collectd service
   tags:
